@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEO Workstation</title>
+    <style>
+        /* General styling */
+        body {
+            background-color: black;
+            color: #00ff00;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: left;
+        }
+
+        .screen {
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            border: 2px solid #00ff00;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 200px;
+            height: 200px;
+            margin-right: 10px;
+        }
+
+        .content p {
+            margin: 5px 0;
+        }
+
+        a {
+            color: #00ff00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .authorization {
+            margin-top: 20px;
+        }
+
+        .hidden-message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            display: none;
+            color: #00ff00;
+        }
+
+        input {
+            background-color: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 5px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 18px;
+            width: 200px;
+        }
+
+        button {
+            padding: 5px 10px;
+            font-size: 16px;
+            background-color: #00ff00;
+            color: black;
+            border: none;
+            cursor: pointer;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        button:hover {
+            background-color: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="screen">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+            <h1>CEO Workstation</h1>
+        </div>
+        <div class="content">
+            <p>Nakatomi Socrates BSD 9.2</p>
+            <p>Z-Level Central Core</p>
+            <p>Preliminary Clearance Approved.</p>
+            <p>Subroute: Finance/<a href="#">Alpha Access</a></p>
+        </div>
+
+        <div class="authorization">
+            <p>Authorisation:</p>
+            <p>Ultra-Gate Key></p>
+            <p>Daily Cypher> 
+                <input type="text" id="codeInput" placeholder="Enter Code">
+                <button onclick="checkCode()">Submit</button>
+            </p>
+        </div>
+
+        <div class="hidden-message" id="hiddenMessage">
+            Access Granted. The vault code is 1987-42.
+        </div>
+    </div>
+
+    <script>
+        function checkCode() {
+            const correctCode = "1234"; // Replace this with your desired code
+            const userCode = document.getElementById("codeInput").value;
+            const hiddenMessage = document.getElementById("hiddenMessage");
+
+            if (userCode === correctCode) {
+                hiddenMessage.style.display = "block";
+            } else {
+                alert("Incorrect code. Try again.");
+            }
+        }
+    </script>
+</body>
+</html>

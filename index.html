@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CEO Workstation</title>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
         /* General styling */
         body {
@@ -36,8 +34,8 @@
         }
 
         .logo img {
-            width: 150px;
-            height: 150px;
+            width: 100px; /* Updated size for the logo */
+            height: 100px;
             margin-right: 10px;
         }
 
@@ -102,7 +100,7 @@
             <p>Nakatomi Socrates BSD 9.2</p>
             <p>Z-Level Central Core</p>
             <p>Preliminary Clearance Approved.</p>
-            <p>Subroute: Finance/<a href="#">Alpha Access</a></p>
+            <p>Subroute: Finance/<a href="#">Alpha</a></p>
         </div>
 
         <div class="authorization">
@@ -117,9 +115,33 @@
         <div class="hidden-message" id="hiddenMessage">
             Access Granted. The vault code is 1987-42.
         </div>
+
+        <button id="fullscreenButton" onclick="toggleFullscreen()">Enter Fullscreen</button>
     </div>
 
     <script>
+        function toggleFullscreen() {
+            const elem = document.documentElement; // Fullscreen the whole page
+            const fullscreenButton = document.querySelector('#fullscreenButton'); // Select the button
+
+            if (!document.fullscreenElement) {
+                // Request fullscreen
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) { // Safari compatibility
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { // IE compatibility
+                    elem.msRequestFullscreen();
+                }
+
+                // Hide the button by turning it black and disabling pointer events
+                fullscreenButton.style.color = 'black';
+                fullscreenButton.style.backgroundColor = 'black';
+                fullscreenButton.style.border = 'none';
+                fullscreenButton.style.pointerEvents = 'none'; // Disable interaction
+            }
+        }
+
         function checkCode() {
             const correctCode = "1234"; // Replace this with your desired code
             const userCode = document.getElementById("codeInput").value;

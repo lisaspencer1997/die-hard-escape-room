@@ -128,10 +128,11 @@
 </head>
 <body>
     <div id="videoContainer">
-        <video id="introVideo" autoplay>
+        <video id="introVideo">
             <source src="intro.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+        <button id="playVideoButton" onclick="playVideo()">Play Video</button>
     </div>
 
     <div id="codeScreen">
@@ -168,6 +169,12 @@
         const video = document.getElementById('introVideo');
         const videoContainer = document.getElementById('videoContainer');
         const codeScreen = document.getElementById('codeScreen');
+
+        function playVideo() {
+            const video = document.getElementById('introVideo');
+            video.play(); // Play the video with sound
+            document.getElementById('playVideoButton').style.display = 'none'; // Hide the button
+        }
 
         // Show code screen after video ends
         video.addEventListener('ended', () => {

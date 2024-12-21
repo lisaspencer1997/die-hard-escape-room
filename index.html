@@ -12,50 +12,53 @@
             color: #32e7dc;
             font-family: "Courier New", Courier, monospace;
             font-size: 18px;
+            margin: 0;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
             text-align: left;
         }
 
-        /* General styling */
-        body {
-            background-color: black;
-            color: #00ff00;
-            font-family: "Courier New", Courier, monospace;
+        #playButton {
+            background-color: #32e7dc;
+            color: black;
+            border: none;
+            padding: 10px 20px;
             font-size: 18px;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: left;
+            cursor: pointer;
+            font-family: "Courier New", Courier, monospace;
+            z-index: 10; /* Ensure the button appears on top */
         }
 
-        #videoContainer, #codeScreen {
+        #playButton:hover {
+            background-color: black;
+            color: #32e7dc;
+            border: 1px solid #32e7dc;
+        }
+
+        #videoContainer {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
+            background-color: black;
         }
 
         #videoContainer video {
             width: 100%;
-            height: auto;
-            background-color: black;
+            height: 100%;
         }
 
         #codeScreen {
             display: none;
             flex-direction: column;
         }
+
         .screen {
             width: 80%;
             max-width: 800px;
@@ -70,7 +73,7 @@
         }
 
         .logo img {
-            width: 100px; /* Updated size for the logo */
+            width: 100px;
             height: 100px;
             margin-right: 10px;
         }
@@ -127,12 +130,16 @@
     </style>
 </head>
 <body>
+
+    <!-- Play Button -->
+    <button id="playButton" onclick="startVideo()">Play Video</button>
+
+    <!-- Video Container -->
     <div id="videoContainer">
         <video id="introVideo">
             <source src="intro.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <button id="playVideoButton" onclick="playVideo()">Play Video</button>
     </div>
 
     <div id="codeScreen">
@@ -147,7 +154,7 @@
                 <p>Preliminary Clearance Approved.</p>
                 <p>Subroute: Finance/<a href="#">Alpha</a></p>
             </div>
-    
+
             <div class="authorization">
                 <p>Authorisation:</p>
                 <p>Ultra-Gate Key></p>
@@ -156,52 +163,43 @@
                     <button onclick="checkCode()">Submit</button>
                 </p>
             </div>
-    
+
             <div class="hidden-message" id="hiddenMessage">
                 Access Granted. The vault code is 1987-42.
             </div>
-    
-            <button id="fullscreenButton" onclick="toggleFullscreen()">Enter Fullscreen</button>
         </div>
     </div>
     
     <script>
-        const video = document.getElementById('introVideo');
-        const videoContainer = document.getElementById('videoContainer');
-        const codeScreen = document.getElementById('codeScreen');
-
-        function playVideo() {
+        function startVideo() {
+            const videoContainer = document.getElementById('videoContainer');
             const video = document.getElementById('introVideo');
-            video.play(); // Play the video with sound
-            document.getElementById('playVideoButton').style.display = 'none'; // Hide the button
-        }
+            const playButton = document.getElementById('playButton');
+            const codeScreen = document.getElementById('codeScreen');
 
-        // Show code screen after video ends
-        video.addEventListener('ended', () => {
-            videoContainer.style.display = 'none';
-            codeScreen.style.display = 'flex';
-        });
-        
-        function toggleFullscreen() {
-            const elem = document.documentElement; // Fullscreen the whole page
-            const fullscreenButton = document.querySelector('#fullscreenButton'); // Select the button
+            // Hide the play button
+            playButton.style.display = 'none';
 
-            if (!document.fullscreenElement) {
-                // Request fullscreen
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) { // Safari compatibility
-                    elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) { // IE compatibility
-                    elem.msRequestFullscreen();
-                }
+            // Show the video container
+            videoContainer.style.display = 'flex';
 
-                // Hide the button by turning it black and disabling pointer events
-                fullscreenButton.style.color = 'black';
-                fullscreenButton.style.backgroundColor = 'black';
-                fullscreenButton.style.border = 'none';
-                fullscreenButton.style.pointerEvents = 'none'; // Disable interaction
+            // Request fullscreen mode for the video container
+            if (videoContainer.requestFullscreen) {
+                videoContainer.requestFullscreen();
+            } else if (videoContainer.webkitRequestFullscreen) { // Safari compatibility
+                videoContainer.webkitRequestFullscreen();
+            } else if (videoContainer.msRequestFullscreen) { // IE compatibility
+                videoContainer.msRequestFullscreen();
             }
+
+            // Play the video
+            video.play();
+
+            // Show code screen after video ends
+            video.addEventListener('ended', () => {
+                videoContainer.style.display = 'none';
+                codeScreen.style.display = 'flex';
+            });
         }
 
         function checkCode() {

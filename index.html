@@ -17,7 +17,8 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            text-align: left;
+            overflow: hidden; /* Prevent scrolling */
+            text-align: center;
         }
 
         #playButton {
@@ -66,40 +67,32 @@
             border: 2px solid #32e7dc;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .logo img {
-            width: 100px;
-            height: 100px;
-            margin-right: 10px;
-        }
-
-        .content p {
-            margin: 5px 0;
-        }
-
-        a {
-            color: #32e7dc;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .authorization {
-            margin-top: 20px;
-        }
-
-        .hidden-message {
-            margin-top: 20px;
-            font-size: 1.2rem;
+        #accessMessage {
             display: none;
-            color: #32e7dc;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+        }
+
+        #accessGranted {
+            font-size: 3rem;
+            font-weight: bold;
+            border: 2px solid #32e7dc;
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: blink 0.5s step-start infinite;
+        }
+
+        #logbookMessage {
+            font-size: 1.2rem;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
         }
 
         input {
@@ -144,32 +137,19 @@
 
     <div id="codeScreen">
         <div class="screen">
-            <div class="logo">
-                <img src="https://raw.githubusercontent.com/lisaspencer1997/die-hard-escape-room/refs/heads/main/logo.png" alt="Logo">
-                <h1>CEO Workstation</h1>
-            </div>
-            <div class="content">
-                <p>Nakatomi Socrates BSD 9.2</p>
-                <p>Z-Level Central Core</p>
-                <p>Preliminary Clearance Approved.</p>
-                <p>Subroute: Finance/<a href="#">Alpha</a></p>
-            </div>
-
-            <div class="authorization">
-                <p>Authorisation:</p>
-                <p>Ultra-Gate Key></p>
-                <p>Daily Cypher> 
-                    <input type="text" id="codeInput" placeholder="Enter Code">
-                    <button onclick="checkCode()">Submit</button>
-                </p>
-            </div>
-
-            <div class="hidden-message" id="hiddenMessage">
-                Access Granted. The vault code is 1987-42.
-            </div>
+            <h1>CEO Workstation</h1>
+            <p>Enter Authorization Code:</p>
+            <input type="text" id="codeInput" placeholder="Enter Code">
+            <button onclick="checkCode()">Submit</button>
         </div>
     </div>
-    
+
+    <!-- Access Message Screen -->
+    <div id="accessMessage">
+        <div id="accessGranted">Access Granted</div>
+        <div id="logbookMessage">Details to follow are located in the Nakatomi Corporation logbook.</div>
+    </div>
+
     <script>
         function startVideo() {
             const videoContainer = document.getElementById('videoContainer');
@@ -177,25 +157,10 @@
             const playButton = document.getElementById('playButton');
             const codeScreen = document.getElementById('codeScreen');
 
-            // Hide the play button
             playButton.style.display = 'none';
-
-            // Show the video container
             videoContainer.style.display = 'flex';
-
-            // Request fullscreen mode for the video container
-            if (videoContainer.requestFullscreen) {
-                videoContainer.requestFullscreen();
-            } else if (videoContainer.webkitRequestFullscreen) { // Safari compatibility
-                videoContainer.webkitRequestFullscreen();
-            } else if (videoContainer.msRequestFullscreen) { // IE compatibility
-                videoContainer.msRequestFullscreen();
-            }
-
-            // Play the video
             video.play();
 
-            // Show code screen after video ends
             video.addEventListener('ended', () => {
                 videoContainer.style.display = 'none';
                 codeScreen.style.display = 'flex';
@@ -203,12 +168,20 @@
         }
 
         function checkCode() {
-            const correctCode = "josephindonesia241288"; // Replace this with your desired code
+            const correctCode = "josephindonesia241288";
             const userCode = document.getElementById("codeInput").value;
-            const hiddenMessage = document.getElementById("hiddenMessage");
+            const codeScreen = document.getElementById('codeScreen');
+            const accessMessage = document.getElementById('accessMessage');
+            const accessGranted = document.getElementById('accessGranted');
 
             if (userCode === correctCode) {
-                hiddenMessage.style.display = "block";
+                codeScreen.style.display = 'none';
+                accessMessage.style.display = 'flex';
+
+                // Blink "Access Granted" for 3 seconds
+                setTimeout(() => {
+                    accessGranted.style.animation = "none";
+                }, 3000);
             } else {
                 alert("Incorrect code. Try again.");
             }

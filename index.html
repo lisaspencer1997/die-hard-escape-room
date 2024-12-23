@@ -79,6 +79,23 @@
             margin-right: 10px;
         }
 
+        .content p {
+            margin: 5px 0;
+        }
+
+        a {
+            color: #32e7dc;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .authorization {
+            margin-top: 20px;
+        }
+
         .logo h1 {
             margin: 0;
             font-size: 2rem;
@@ -158,9 +175,21 @@
                 <img src="https://raw.githubusercontent.com/lisaspencer1997/die-hard-escape-room/refs/heads/main/logo.png" alt="Logo">
                 <h1>CEO Workstation</h1>
             </div>
-            <p>Enter Authorization Code:</p>
-            <input type="text" id="codeInput" placeholder="Enter Code">
-            <button onclick="checkCode()">Submit</button>
+            <div class="content">
+                <p>Nakatomi Socrates BSD 9.2</p>
+                <p>Z-Level Central Core</p>
+                <p>Preliminary Clearance Approved.</p>
+                <p>Subroute: Finance/<a href="#">Alpha</a></p>
+            </div>
+
+            <div class="authorization">
+                <p>Authorisation:</p>
+                <p>Ultra-Gate Key></p>
+                <p>Daily Cypher> 
+                    <input type="text" id="codeInput" placeholder="Enter Code">
+                    <button onclick="checkCode()">Submit</button>
+                </p>
+            </div>
         </div>
     </div>
 
